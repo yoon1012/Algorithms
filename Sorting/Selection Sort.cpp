@@ -1,35 +1,49 @@
 #include <iostream>
+#include <array>
 
 using namespace std;
 
-int main(void)
+void swap(int& a, int& b)
 {
-	int arr[6] = { 5, 2, 4, 6, 1, 3 };
-
-	for (int i = 0; i < 6 - 1; i++)
-	{
-		// 가장 작은 인덱스를 찾음
-		int min = i;
-
-		// 정렬 후 비교하는 인덱스 감소
-		for (int j = i + 1; j < 6; j++)
-		{
-			if (arr[min] > arr[j]) min = j;
-		}
-
-		int temp;
-		temp = arr[min];
-		arr[min] = arr[i];
-		arr[i] = temp;
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		cout << arr[i] << " ";
-	}
-
-	cout << endl;
-	return 0;
+	int temp = a;
+	a = b;
+	b = temp;
 }
 
-// O(n^2)
+// Best	   O(n^2)
+// Average O(n^2)
+// Worst   O(n^2)
+
+void printArray(array<int, 6> arr)
+{
+	for (int i = 0; i < arr.size(); i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+void selectionSort(array<int, 6>& arr)
+{
+	for (int i = 0; i < arr.size() - 1; i++)
+    {
+        int minIndex = i;
+        for (int j = i + 1 ; j < arr.size() ; j++)
+        {
+            if (arr[minIndex] > arr[j])
+            {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) swap(arr[i], arr[minIndex]);
+    }
+}
+
+int main(void)
+{
+	array<int, 6> arr = { 5, 2, 4, 6, 1, 3 };
+
+	selectionSort(arr);
+	printArray(arr);
+
+	return 0;
+}

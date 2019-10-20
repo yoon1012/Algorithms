@@ -1,33 +1,44 @@
 #include <iostream>
+#include <array>
 
 using namespace std;
 
-int main(void)
+void swap(int& a, int& b)
 {
-	int arr[6] = { 5, 2, 4, 6, 1, 3 };
-
-	// 처음부터 n - 1까지
-	for (int i = 0; i < 6 - 1; i++)
-	{
-        // 가장 큰 수를 맨 뒤로 보내면 정렬해야 할 개수가 하나씩 줄어듬
-		for (int j = 0; j < 6 - 1 - i ; j++)
-		{
-			if (arr[j] > arr[j+1])
-			{
-				int temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-		} 
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		cout << arr[i] << " ";
-	}
-
-	cout << endl;
-	return 0;
+	int temp = a;
+	a = b;
+	b = temp;
 }
 
-// 거의 정렬된 경우 O(n), 그렇지 않으면 O(n^2)
+void printArray(array<int, 6> arr)
+{
+	for (int i = 0; i < arr.size(); i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+// Best	   O(n) when elements are mostly sorted
+// Average O(n^2)
+// Worst   O(n^2)
+
+void bubbleSort(array<int, 6>& arr)
+{
+	for (int i = 0; i < arr.size() - 1; i++)
+	{
+		for (int j = 0; j < arr.size() - 1 - i; j++)
+		{
+			if (arr[j] > arr[j + 1])
+				swap(arr[j], arr[j + 1]);
+		}
+	}
+}
+
+int main(void)
+{
+	array<int, 6> arr = { 5, 2, 4, 6, 1, 3 };
+
+	bubbleSort(arr);
+	printArray(arr);
+
+	return 0;
+}
